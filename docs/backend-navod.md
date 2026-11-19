@@ -50,6 +50,19 @@ V dashboardu **SQL Editor → New query**, vlož celý obsah `supabase/migration
 4. **Secret Key** nech prázdný. Je potřeba jen pro přihlášení na webu; aplikace na iPhonu přihlašuje nativně.
 5. **Save**.
 
+## 3b. Náhradní přihlášení kódem z e-mailu (bez placeného Apple programu)
+
+Sign in with Apple funguje jen s placeným **Apple Developer Programem** (99 USD/rok). S bezplatným „Personal Team“ se capability v Xcode vůbec nenabídne. Do té doby se dá přihlásit 6místným kódem z e-mailu:
+
+1. Dashboard → **Authentication → Sign In / Providers → Email**: musí být zapnuté (výchozí stav).
+2. Dashboard → **Authentication → Emails → Templates → Magic Link**. Do textu e-mailu přidej řádek
+   `Tvůj kód do PADEE: {{ .Token }}` a dej **Save**. Bez toho by e-mail obsahoval jen odkaz a žádný kód.
+3. V aplikaci zadej e-mail → **Poslat kód na e-mail** → opiš kód.
+
+> Vestavěná e-mailová služba Supabase pošle jen pár e-mailů za hodinu. Na vývoj to stačí; pro betu (T15) se nastaví vlastní SMTP.
+
+Krok 4b (capability) přeskoč, dokud nemáš placený program. Tlačítko Apple v aplikaci zatím skončí chybou 1000.
+
 ## 4. Xcode
 
 Otevři `App/PADEE/PADEE.xcodeproj`.

@@ -112,6 +112,55 @@ final class AuthViewModel {
         currentNonce = nil
     }
 
+    // MARK: - Přihlášení kódem z e-mailu
+    //
+    // Náhradní přihlášení, dokud není aktivní placený Apple Developer Program
+    // (Sign in with Apple s bezplatným „Personal Team“ nejde).
+    // Postup: 1) pošleme na e-mail 6místný kód, 2) uživatel ho opíše, 3) ověříme.
+
+    /// E-mail, na který odešel kód. Když není nil, View ukáže pole pro kód.
+    private(set) var emailWaitingForCode: String?
+
+    /// Krok 1: Supabase pošle na e-mail jednorázový kód.
+    /// Pokud účet s tímto e-mailem ještě neexistuje, Supabase ho založí.
+    func sendEmailCode(to email: String) async {
+        errorMessage = nil
+        let cleaned = email.trimmingCharacters(in: .whitespaces).lowercased()
+        guard cleaned.contains("@") else {
+            errorMessage = "Zadej platný e-mail."
+            return
+        }
+        do {
+            try await client.auth.signInWithOTP(email: cleaned)
+            emailWaitingForCode = cleaned
+        } catch {
+            errorMessage = "Kód se nepodařilo odeslat: \(error.localizedDescription)"
+        }
+    }
+
+    /// Krok 2: ověří kód z e-mailu. Po úspěchu přijde událost `.signedIn`
+    /// do `observeAuthChanges()` a ta načte profil.
+    func verifyEmailCode(_ code: String) async {
+        errorMessage = nil
+        guard let email = emailWaitingForCode else { return }
+        do {
+            try await client.auth.verifyOTP(
+                email: email,
+                token: code.trimmingCharacters(in: .whitespaces),
+                type: .email
+            )
+            emailWaitingForCode = nil
+        } catch {
+            errorMessage = "Kód nesouhlasí nebo vypršel. Zkus to znovu."
+        }
+    }
+
+    /// Zpět na zadání e-mailu (např. při překlepu v adrese).
+    func cancelEmailCode() {
+        emailWaitingForCode = nil
+        errorMessage = nil
+    }
+
     // MARK: - Odhlášení
 
     func signOut() async {
