@@ -10,6 +10,15 @@
       "Base",
     ],
   },
+  "packages": [
+    {
+      "kind": "remote",
+      "repository": "https://github.com/supabase/supabase-swift",
+      "version": {
+        "up-to-next-major-version": "2.5.1",
+      },
+    },
+  ],
   "files": [
     { "kind": "folder", "path": "PADEE", "target-membership": [ "PADEE" ] },
     { "kind": "folder", "path": "PADEETests", "target-membership": [ "PADEETests" ] },
@@ -48,6 +57,12 @@
           "name": "Embed Watch Content",
           "bundle-base-path": "build-products-directory",
           "relative-path": "$(CONTENTS_FOLDER_PATH)/Watch",
+        },
+      ],
+      "package-product-members": [
+        {
+          "product-name": "Supabase",
+          "build-phase": { "build-phase": "frameworks" },
         },
       ],
       "build-settings": {

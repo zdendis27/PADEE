@@ -39,6 +39,7 @@ fastlane/test_output
 Secrets.xcconfig
 Config/Secrets*.xcconfig
 GoogleService-Info.plist
+Secrets.plist
 
 # Supabase lokální běh
 supabase/.branches/
