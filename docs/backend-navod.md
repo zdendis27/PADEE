@@ -27,11 +27,12 @@ Doporučený způsob je přes **Supabase CLI**, protože si pamatuje, které mig
 brew install supabase/tap/supabase   # jednou: instalace CLI
 supabase login                       # otevře prohlížeč, potvrď přístup
 supabase init                        # jednou: vytvoří supabase/config.toml (na dotazy odpověz N)
+git fetch && git switch claude/project-thread-dumzes   # dokud není PR #4 sloučený, migrace jsou jen v této větvi
 supabase link --project-ref TVUJ_PROJECT_REF   # zeptá se na heslo databáze z kroku 1
-supabase db push                     # nahraje obě migrace do databáze
+supabase db push --remote            # nahraje obě migrace do databáze v cloudu
 ```
 
-`supabase db push` vypíše obě migrace a zeptá se `Do you want to push these migrations?`, odpověz `Y`.
+`supabase db push --remote` vypíše obě migrace a zeptá se `Do you want to push these migrations?`, odpověz `Y`.
 
 Kontrola v dashboardu: **Table Editor** ukazuje tabulky `clubs`, `matches`, `match_players`, `points`, `profiles`, `sets` a u každé je zelený štítek RLS (ne červené „RLS disabled“).
 
