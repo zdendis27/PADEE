@@ -32,12 +32,15 @@ PADEE je mobilní aplikace pro **iPhone a Apple Watch** pro amatérské i pokro�
 App/                  Xcode projekt (iOS + watchOS target)
 supabase/
   migrations/         SQL migrace (tabulky, RLS politiky)
+  tests/              Testy databáze (pgTAP), např. RLS
   functions/          Edge Functions (AI trenér)
 docs/
   harmonogram.md      Časový plán 2. 11. 2026 – 28. 2. 2027
   lean-canvas.md      Lean Canvas (text)
   lean-canvas.xlsx    Lean Canvas (originál)
   uzivatelske-cesty.md  Persony, uživatelské cesty a mapa obrazovek
+  datovy-model.md     ER diagram databáze a pravidla RLS
+  backend-navod.md    Návod: Supabase projekt, Sign in with Apple, klíče
 .github/              Šablony issues a pull requestů
 CLAUDE.md             Pokyny pro Claude při práci v repozitáři
 ```
