@@ -55,11 +55,12 @@ V dashboardu **SQL Editor → New query**, vlož celý obsah `supabase/migration
 Sign in with Apple funguje jen s placeným **Apple Developer Programem** (99 USD/rok). S bezplatným „Personal Team“ se capability v Xcode vůbec nenabídne. Do té doby se dá přihlásit 6místným kódem z e-mailu:
 
 1. Dashboard → **Authentication → Sign In / Providers → Email**: musí být zapnuté (výchozí stav).
-2. Dashboard → **Authentication → Emails → Templates → Magic Link**. Do textu e-mailu přidej řádek
+2. Supabase dovolí upravit šablonu jen s **vlastním SMTP**. Nejjednodušší je Gmail: na [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords) vytvoř heslo aplikace (vyžaduje dvoufázové ověření). V dashboardu otevři **Authentication → Emails → SMTP Settings**, zapni **Enable custom SMTP** a vyplň: Host `smtp.gmail.com`, Port `465`, Username a Sender email = tvůj Gmail, Password = heslo aplikace bez mezer, Sender name `PADEE`. Pak **Save**.
+3. Dashboard → **Authentication → Emails → Templates → Magic Link** (totéž i u **Confirm signup**, tu dostane nový uživatel při prvním přihlášení). Do textu e-mailu přidej řádek
    `Tvůj kód do PADEE: {{ .Token }}` a dej **Save**. Bez toho by e-mail obsahoval jen odkaz a žádný kód.
-3. V aplikaci zadej e-mail → **Poslat kód na e-mail** → opiš kód.
+4. V aplikaci zadej e-mail → **Poslat kód na e-mail** → opiš kód.
 
-> Vestavěná e-mailová služba Supabase pošle jen pár e-mailů za hodinu. Na vývoj to stačí; pro betu (T15) se nastaví vlastní SMTP.
+> Gmail pošle až 500 e-mailů denně, na vývoj i betu to stačí.
 
 Krok 4b (capability) přeskoč, dokud nemáš placený program. Tlačítko Apple v aplikaci zatím skončí chybou 1000.
 
